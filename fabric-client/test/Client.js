@@ -967,15 +967,26 @@ describe('Client', () => {
 	});
 
 	describe('#createChannel', () => {
-		it('should create a new channel', () => {
-			const _createOrUpdateChannelStub = sinon.stub().returns('channel');
+		it.only('should create a new channel', () => {
+			// const _createOrUpdateChannelStub = sinon.stub().returns('channel');
 			const client = new Client();
-			client._createOrUpdateChannel = _createOrUpdateChannelStub;
-
-			const request = {envelope: true};
+			client.loadFromConfig("/opt/gopath/src/github.com/hyperledger/fabric-sdk-node/fabric-client/artifacts/network-config.yaml");
+			// client._createOrUpdateChannel = _createOrUpdateChannelStub;
+			var envelope = fs.readFileSync(path.join(__dirname, "../artifacts/channel/channel-artifacts/timechannel.tx"));
+			var channelConfig = client.extractChannelConfig(envelope);
+			let signature = client.signChannelConfig(channelConfig);
+			let channelName = "timechannel";
+			let request = {
+				config: channelConfig,
+				signatures: [signature],
+				name: channelName,
+				txId: client.newTransactionID(true) // get an admin based transactionID
+			};
+			// const request = {envelope: false};
 			const channel = client.createChannel(request);
-			sinon.assert.calledWith(_createOrUpdateChannelStub, request, true);
-			channel.should.equal('channel');
+			console.log("channel",channel);
+			// sinon.assert.calledWith(_createOrUpdateChannelStub, request, false);
+			// channel.should.equal('channel');
 		});
 	});
 

@@ -22,19 +22,19 @@ chai.use(chaiAsPromised);
 const expect = chai.expect;
 chai.should();
 
-const Channel = require('fabric-client/lib/Channel');
-const ChannelRewire = rewire('fabric-client/lib/Channel');
-const ChannelEventHub = require('fabric-client/lib/ChannelEventHub');
-const Client = require('fabric-client/lib/Client');
-const {Identity, SigningIdentity} = require('fabric-client/lib/msp/identity');
-const MSP = require('fabric-client/lib/msp/msp');
-const MSPManager = require('fabric-client/lib/msp/msp-manager');
-const Orderer = require('fabric-client/lib/Orderer');
-const Peer = require('fabric-client/lib/Peer');
-const TransactionID = require('fabric-client/lib/TransactionID');
-const sdk_utils = require('fabric-client/lib/utils.js');
+const Channel = require('../lib/Channel');
+const ChannelRewire = rewire('../lib/Channel');
+const ChannelEventHub = require('../lib/ChannelEventHub');
+const Client = require('../lib/Client');
+const {Identity, SigningIdentity} = require('../lib/msp/identity');
+const MSP = require('../lib/msp/msp');
+const MSPManager = require('../lib/msp/msp-manager');
+const Orderer = require('../lib/Orderer');
+const Peer = require('../lib/Peer');
+const TransactionID = require('../lib/TransactionID');
+const sdk_utils = require('../lib/utils.js');
 
-const ProtoLoader = require('fabric-client/lib/ProtoLoader');
+const ProtoLoader = require('../lib/ProtoLoader');
 const responseProto = ProtoLoader.load(__dirname + '/../lib/protos/peer/proposal_response.proto').protos;
 const proposalProto = ProtoLoader.load(__dirname + '/../lib/protos/peer/proposal.proto').protos;
 const chaincodeProto = ProtoLoader.load(__dirname + '/../lib/protos/peer/chaincode.proto').protos;
@@ -43,7 +43,7 @@ const transactionProto = ProtoLoader.load(__dirname + '/../lib/protos/peer/trans
 const commonProto = ProtoLoader.load(__dirname + '/../lib/protos/common/common.proto').common;
 const configtxProto = ProtoLoader.load(__dirname + '/../lib/protos/common/configtx.proto').common;
 
-const fakeHandlerModulePath = 'fabric-client/test/FakeHandler';
+const fakeHandlerModulePath = '../test/FakeHandler';
 const fakeHandler = require(fakeHandlerModulePath).create();
 
 describe('Channel', () => {
@@ -1173,7 +1173,7 @@ describe('Channel', () => {
 
 	describe('#_buildPeerName', () => {
 
-		const peerDefaultConnectionOptions = { // according to fabric-client/config/default.json
+		const peerDefaultConnectionOptions = { // according to ../config/default.json
 			'grpc.default_authority': 'peer0.org1.example.com',
 			'grpc.max_receive_message_length': -1,
 			'grpc.max_send_message_length': -1,
